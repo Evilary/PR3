@@ -12,7 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Chess_Chernyshkov.Classes
 {
-    internal class Pawn
+    public class Pawn
     {
         
         public int X { get; set; }
@@ -40,19 +40,19 @@ namespace Chess_Chernyshkov.Classes
         {
             bool atack = false;
             
-            Pawn SelectPawn = MainWindow.mainWindow.Pawns.Find(x => x.Select == true);
+            Pawn SelectPawn = MainWindow.init.Pawns.Find(x => x.Select == true);
             
             if (SelectPawn != null)
             {
                 if (this.Black && this.Y - 1 == SelectPawn.Y && ( this.X - 1 == SelectPawn.X || this.X == SelectPawn.X || this.X + 1 == SelectPawn.X ) || !this.Black && this.Y + 1 == SelectPawn.Y && (this.X - 1 == SelectPawn.X || this.X == SelectPawn.X || this.X + 1 == SelectPawn.X))
                 {
-                    MainWindow.mainWindow.gameBoard.Children.Remove(this.Figure);
+                    MainWindow.init.gameBoard.Children.Remove(this.Figure);
                    
                     Grid.SetColumn(SelectPawn.Figure, this.X);
                     Grid.SetRow(SelectPawn.Figure, this.Y);
                  
-                    SelectPawn.X = X;
-                    SelectPawn.Y = Y;
+                    SelectPawn.X = this.X;
+                    SelectPawn.Y = this.Y;
 
                     SelectPawn.SelectFigure(null, null);
                     atack = true;
@@ -60,19 +60,20 @@ namespace Chess_Chernyshkov.Classes
             }
             if (!atack)
             {
-                MainWindow.mainWindow.OnSelect(this);
-                if (this.Select)
+                MainWindow.init.OnSelect(this);
+                if (Select)
                 {
                     if (this.Black)
                     
-                        this.Figure.Background = new ImageBrush(new BitmapImage(new Uri("C: /Users/student - a502/Desktop/Chess_Chernyshkov/Images/Pawn(black).png")));
-                        else this.Figure.Background = new ImageBrush(new BitmapImage(new Uri("C://Users//student-a502//Desktop//Chess_Chernyshkov//Images//Pawn.png")));
+                            Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (black).png")));
+                        else 
+                            this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn.png")));
                         this.Select = false;
                     
                 }
                 else
                 {
-                    this.Figure.Background = new ImageBrush(new BitmapImage(new Uri("C://Users//student-a502//Desktop//Chess_Chernyshkov//Images//Pawn (select).png")));
+                    this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (select).png")));
                     this.Select = true;
                 }
             }
@@ -84,7 +85,7 @@ namespace Chess_Chernyshkov.Classes
                 return;
 
             }
-            if (!Black && ((this.Y == 1 && this.Y + 2 == Y) || this.Y + 1 == Y) || Black && ((this.Y == 6 && this.Y - 2 == Y)))
+            if (Black && ((this.Y == 6 && this.Y - 2 == Y) || this.Y - 1 == Y) || !Black && ((this.Y == 1 && this.Y + 2 == Y) || this.Y + 1 == Y))
             {
                 Grid.SetColumn(this.Figure, X);
                 Grid.SetColumn(this.Figure, Y);
