@@ -12,17 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Chess_Chernyshkov.Classes;
 
 namespace Chess_Chernyshkov
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+ 
     public partial class MainWindow : Window
     {
+
+        public static MainWindow mainWindow;
+        public List<Classes.Pawn> Pawns = new List<Classes.Pawn>();
         public MainWindow()
         {
             InitializeComponent();
+            MainWindow.mainWindow = this;
+            
+        }
+        private void SelectTitle(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
